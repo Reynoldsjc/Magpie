@@ -41,7 +41,7 @@ public class Magpie2 {
 				|| statement.indexOf("sister") >= 0
 				|| statement.indexOf("brother") >= 0) {
 			response = "Tell me more about your family.";
-		} else if (statement.indexOf(" Cat ") >= 0
+		} else if (statement.indexOf(" Cat " ) >= 0
 				|| statement.indexOf(" cat ") >= 0
 				|| statement.indexOf(" dog ") >= 0
 				|| statement.indexOf(" Dog ") >= 0) {
@@ -58,8 +58,36 @@ public class Magpie2 {
 			response = getRandomResponse();
 		}
 		return response;
+	
 	}
-
+private int findKeyword(String statement, String goal, int startPos)
+{
+String phrase = statement.trim().toLowerCase();
+goal = goal.toLowerCase();
+int psn = phrase.indexOf(goal, startPos);
+while (psn >= 0)
+{
+String before = " ", after = " ";
+if (psn > 0)
+{
+before = phrase.substring(psn - 1, psn);
+}
+if (psn + goal.length() < phrase.length())
+{
+after = phrase.substring(psn + goal.length(),
+psn + goal.length() + 1);
+}
+/* determine the values of psn, before, and after at this point in the method. */
+if (((before.compareTo ("a") < 0 ) || (before.compareTo("z") > 0))
+&&
+((after.compareTo ("a") < 0 ) || (after.compareTo("z") > 0)))
+{
+return psn;
+}
+psn = phrase.indexOf(goal, psn + 1);
+}
+return -1;
+}
 	/**
 	 * Pick a default response to use if nothing else fits.
 	 * 
